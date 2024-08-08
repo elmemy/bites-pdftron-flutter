@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:pdftron_flutter/voice_recorder.dart';
 
 import 'src/options.dart';
 import 'src/document_view.dart';
@@ -21,6 +22,24 @@ export 'src/constants.dart';
 /// A native plugin for viewing documents and accessing features of the PDFTron SDK.
 class PdftronFlutter {
   static const MethodChannel _channel = const MethodChannel('pdftron_flutter');
+  static final VoiceRecorder _voiceRecorder = VoiceRecorder();
+
+
+  static Future<void> initRecorder() async {
+    await _voiceRecorder.initRecorder();
+  }
+
+  static Future<void> startRecording(String path) async {
+    await _voiceRecorder.startRecording(path);
+  }
+
+  static Future<void> stopRecording() async {
+    await _voiceRecorder.stopRecording();
+  }
+
+  static void disposeRecorder() {
+    _voiceRecorder.dispose();
+  }
 
   /// The current version of the OS that the app is running on.
   static Future<String> get platformVersion async {
